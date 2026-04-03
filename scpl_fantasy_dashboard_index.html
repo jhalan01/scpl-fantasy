@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCPL Fantasy League 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080b0f;
+  --bg2: #0c1018;
+  --bg3: #101520;
+  --surface: #141a24;
+  --surface2: #19212e;
+  --border: #1e2d40;
+  --border2: #243347;
+  --gold: #f0b429;
+  --gold2: #ffe08a;
+  --teal: #00d4aa;
+  --red: #ff4757;
+  --blue: #4da6ff;
+  --power: #ff6b35;
+  --purple: #a78bfa;
+  --text: #e2e8f4;
+  --text2: #7a90a8;
+  --text3: #3d5166;
+  --silver: #a0aec0;
+  --bronze: #cd7f32;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* BG FX */
+.bg-fx {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 90% 40% at 15% 0%, rgba(0,212,170,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 85% 90%, rgba(240,180,41,0.04) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 50% 50%, rgba(77,166,255,0.02) 0%, transparent 70%);
+}
+
+.wrap { max-width: 1380px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+/* ─ HEADER ─ */
+header {
+  padding: 36px 0 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
+}
+.header-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap;
+}
+.brand { display: flex; align-items: center; gap: 18px; }
+.brand-icon {
+  width: 56px; height: 56px;
+  background: linear-gradient(135deg, #f0b429 0%, #ff6b35 100%);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 0 32px rgba(240,180,41,0.25), 0 0 0 1px rgba(240,180,41,0.15);
+  flex-shrink: 0;
+}
+.brand-text h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(32px, 5.5vw, 58px);
+  letter-spacing: 4px;
+  line-height: 1;
+  background: linear-gradient(120deg, var(--gold) 0%, var(--gold2) 40%, var(--teal) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.brand-text p {
+  font-size: 11px; color: var(--text3);
+  letter-spacing: 4px; text-transform: uppercase; margin-top: 5px;
+}
+.header-right { text-align: right; }
+.header-date { font-family: 'Teko', sans-serif; font-size: 20px; color: var(--text2); letter-spacing: 1px; }
+.header-season { font-size: 11px; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+
+/* ─ TOOLBAR ─ */
+.toolbar {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 36px;
+}
+.sheet-input {
+  flex: 1; min-width: 240px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.sheet-input:focus { border-color: var(--teal); }
+.sheet-input::placeholder { color: var(--text3); }
+
+.btn {
+  padding: 10px 20px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+  cursor: pointer; border: none; transition: all 0.18s; white-space: nowrap;
+}
+.btn-primary { background: linear-gradient(135deg, var(--gold), var(--power)); color: #000; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(240,180,41,0.35); }
+.btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text2); }
+.btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+.status-pill {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 100px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+.pill-live { background: rgba(0,212,170,0.1); color: var(--teal); border: 1px solid rgba(0,212,170,0.22); }
+.pill-demo { background: rgba(240,180,41,0.1); color: var(--gold); border: 1px solid rgba(240,180,41,0.22); }
+.pill-err  { background: rgba(255,71,87,0.1);  color: var(--red);  border: 1px solid rgba(255,71,87,0.22); }
+.blink { width: 6px; height: 6px; border-radius: 50%; background: currentColor; animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+/* ─ PODIUM ─ */
+.podium-section { margin-bottom: 48px; }
+.section-label {
+  font-family: 'Teko', sans-serif;
+  font-size: 13px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-label::after { content:''; flex:1; height:1px; background: var(--border); }
+
+.podium {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.podium-card {
+  border-radius: 16px;
+  padding: 24px 20px 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.podium-card:hover { transform: translateY(-3px); }
+
+.podium-card.p1 {
+  background: linear-gradient(145deg, rgba(240,180,41,0.12) 0%, var(--surface) 60%);
+  border-color: rgba(240,180,41,0.35);
+  box-shadow: 0 0 40px rgba(240,180,41,0.1);
+}
+.podium-card.p2 {
+  background: linear-gradient(145deg, rgba(160,174,192,0.1) 0%, var(--surface) 60%);
+  border-color: rgba(160,174,192,0.25);
+}
+.podium-card.p3 {
+  background: linear-gradient(145deg, rgba(205,127,50,0.1) 0%, var(--surface) 60%);
+  border-color: rgba(205,127,50,0.25);
+}
+
+.podium-rank {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px; letter-spacing: 3px;
+  position: absolute; top: 16px; right: 16px;
+  opacity: 0.5;
+}
+.p1 .podium-rank { color: var(--gold); opacity: 0.8; }
+.p2 .podium-rank { color: var(--silver); }
+.p3 .podium-rank { color: var(--bronze); }
+
+.podium-trophy {
+  font-size: 32px; margin-bottom: 10px; display: block;
+}
+.podium-avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 12px;
+  border: 2px solid var(--border);
+}
+.podium-name {
+  font-weight: 700; font-size: 15px;
+  color: var(--text); margin-bottom: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.podium-pts {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px; letter-spacing: 2px; line-height: 1;
+  margin-bottom: 2px;
+}
+.p1 .podium-pts { color: var(--gold); }
+.p2 .podium-pts { color: var(--silver); }
+.p3 .podium-pts { color: var(--bronze); }
+.podium-sub { font-size: 11px; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; }
+
+/* ─ LEADERBOARD TABLE ─ */
+.lb-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 52px;
+}
+
+.lb-thead {
+  display: grid;
+  grid-template-columns: 56px 1fr 100px 110px 110px 36px;
+  padding: 13px 20px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--text3);
+  gap: 8px;
+}
+
+.lb-row {
+  display: grid;
+  grid-template-columns: 56px 1fr 100px 110px 110px 36px;
+  padding: 0 20px; min-height: 64px;
+  border-bottom: 1px solid rgba(30,45,64,0.6);
+  gap: 8px; align-items: center;
+  cursor: pointer;
+  transition: background 0.15s;
+  position: relative;
+}
+.lb-row:last-child { border-bottom: none; }
+.lb-row:hover { background: rgba(255,255,255,0.018); }
+.lb-row.expanded { background: rgba(0,212,170,0.03); border-bottom-color: transparent; }
+.lb-row.r1 { background: linear-gradient(90deg, rgba(240,180,41,0.07) 0%, transparent 55%); }
+.lb-row.r2 { background: linear-gradient(90deg, rgba(160,174,192,0.05) 0%, transparent 55%); }
+.lb-row.r3 { background: linear-gradient(90deg, rgba(205,127,50,0.05) 0%, transparent 55%); }
+
+.lb-rank {
+  font-family: 'Bebas Neue', sans-serif; font-size: 28px;
+  color: var(--text3);
+}
+.r1 .lb-rank { color: var(--gold); }
+.r2 .lb-rank { color: var(--silver); }
+.r3 .lb-rank { color: var(--bronze); }
+
+.lb-team { display: flex; align-items: center; gap: 13px; min-width: 0; }
+.t-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+.t-name { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.t-meta { font-size: 11px; color: var(--text3); margin-top: 1px; }
+
+.lb-players { font-size: 13px; color: var(--text2); }
+.lb-raw {
+  font-family: 'Teko', sans-serif; font-size: 22px;
+  color: var(--text3); text-align: right; letter-spacing: 0.5px;
+}
+.lb-pts {
+  font-family: 'Teko', sans-serif; font-size: 30px; font-weight: 600;
+  color: var(--teal); text-align: right; letter-spacing: 1px;
+  line-height: 1;
+}
+.lb-pts-sub { font-size: 9px; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
+.lb-chevron { font-size: 18px; color: var(--text3); transition: transform 0.3s, color 0.2s; text-align: right; }
+.lb-row.expanded .lb-chevron { transform: rotate(90deg); color: var(--teal); }
+
+/* ─ TEAM DETAIL ─ */
+.team-detail {
+  display: none;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 20px;
+  animation: slideIn 0.22s ease;
+}
+.team-detail.open { display: block; }
+@keyframes slideIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+
+.detail-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 18px; flex-wrap: wrap; gap: 10px;
+}
+.detail-heading {
+  font-family: 'Teko', sans-serif; font-size: 18px;
+  font-weight: 500; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--text2);
+}
+.detail-legend {
+  display: flex; align-items: center; gap: 16px;
+  font-size: 11px; color: var(--text3);
+}
+.legend-item { display: flex; align-items: center; gap: 5px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+
+.squad-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 9px;
+}
+
+.sq-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 10px;
+  position: relative; overflow: hidden;
+  transition: border-color 0.15s;
+}
+.sq-card:hover { border-color: var(--border2); }
+.sq-card.is-power {
+  border-color: rgba(255,107,53,0.5);
+  background: rgba(255,107,53,0.06);
+}
+.sq-card.is-bench {
+  opacity: 0.32; filter: grayscale(0.4);
+}
+.sq-card.is-power::before {
+  content: '⚡'; position: absolute; top: 5px; right: 8px;
+  font-size: 9px; color: var(--power);
+}
+.sq-card.is-bench::before {
+  content: 'BENCH'; position: absolute; top: 4px; right: 8px;
+  font-size: 8px; font-weight: 700; letter-spacing: 1px; color: var(--text3);
+}
+.sq-left { flex: 1; min-width: 0; }
+.sq-name { font-size: 12.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
+.sq-role { font-size: 10px; color: var(--text3); margin-top: 1px; }
+.sq-iplteam {
+  display: inline-block; margin-top: 3px;
+  padding: 2px 6px; border-radius: 3px;
+  background: var(--bg3); font-size: 9.5px; color: var(--text2);
+  border: 1px solid var(--border); white-space: nowrap;
+}
+.sq-right { text-align: right; flex-shrink: 0; }
+.sq-pts {
+  font-family: 'Teko', sans-serif; font-size: 26px; font-weight: 600;
+  color: var(--text3); line-height: 1;
+}
+.sq-pts.scored { color: var(--teal); }
+.sq-pts.powered { color: var(--power); }
+.sq-raw { font-size: 9px; color: var(--text3); font-style: italic; margin-top: 1px; }
+
+/* ─ PLAYERS TABLE ─ */
+.players-section { margin-bottom: 60px; }
+
+.table-controls {
+  display: flex; gap: 10px; align-items: center;
+  margin-bottom: 18px; flex-wrap: wrap;
+}
+.search-box {
+  flex: 1; min-width: 180px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-family: 'DM Sans', sans-serif; font-size: 13px;
+  color: var(--text); outline: none;
+}
+.search-box:focus { border-color: var(--teal); }
+.search-box::placeholder { color: var(--text3); }
+
+.chip {
+  padding: 7px 15px; border-radius: 100px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+  cursor: pointer; border: 1px solid var(--border);
+  background: transparent; color: var(--text2);
+  transition: all 0.15s; white-space: nowrap;
+}
+.chip.on { border-color: var(--teal); color: var(--teal); background: rgba(0,212,170,0.08); }
+
+.sort-btn {
+  padding: 7px 13px; border-radius: 8px;
+  font-size: 11px; font-weight: 600;
+  cursor: pointer; border: 1px solid var(--border);
+  background: transparent; color: var(--text2);
+  transition: all 0.15s; white-space: nowrap;
+}
+.sort-btn.on { border-color: var(--blue); color: var(--blue); background: rgba(77,166,255,0.08); }
+
+.ptable {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+}
+
+.pt-head {
+  display: grid;
+  grid-template-columns: 44px 1fr 130px 120px 90px 80px;
+  padding: 12px 20px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--text3); gap: 8px;
+}
+.pt-row {
+  display: grid;
+  grid-template-columns: 44px 1fr 130px 120px 90px 80px;
+  padding: 11px 20px;
+  border-bottom: 1px solid rgba(30,45,64,0.4);
+  gap: 8px; align-items: center;
+  font-size: 13px; transition: background 0.12s;
+}
+.pt-row:last-child { border-bottom: none; }
+.pt-row:hover { background: rgba(255,255,255,0.018); }
+.pt-row.pw { background: rgba(255,107,53,0.04); }
+
+.pt-n { font-family:'Teko',sans-serif; font-size:19px; color: var(--text3); }
+.pt-player-name { font-weight: 600; color: var(--text); }
+.pt-franchise { font-size: 12px; color: var(--text2); }
+.pt-ipl { font-size: 11px; color: var(--text3); }
+.pt-pts { font-family:'Teko',sans-serif; font-size:24px; font-weight:600; color: var(--teal); }
+.pt-pts.pw { color: var(--power); }
+.pt-pts.zero { color: var(--text3); }
+.pt-role-badge {
+  padding: 3px 8px; border-radius: 4px;
+  background: var(--bg3); border: 1px solid var(--border);
+  font-size: 9.5px; color: var(--text3); text-align: center;
+  white-space: nowrap;
+}
+
+.no-data {
+  padding: 60px 20px; text-align: center;
+  color: var(--text3); font-size: 14px;
+}
+.no-data span { display: block; font-size: 36px; margin-bottom: 12px; }
+
+/* ─ SETUP GUIDE MODAL ─ */
+.overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.85); backdrop-filter: blur(6px);
+  z-index: 200; align-items: center; justify-content: center; padding: 20px;
+}
+.overlay.open { display: flex; }
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  max-width: 620px; width: 100%;
+  max-height: 88vh; overflow-y: auto;
+  padding: 36px;
+  position: relative;
+}
+.modal-close {
+  position: absolute; top: 18px; right: 20px;
+  background: none; border: none; color: var(--text3);
+  font-size: 26px; cursor: pointer; line-height: 1;
+}
+.modal-close:hover { color: var(--text); }
+.modal h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 34px; letter-spacing: 3px; color: var(--gold); margin-bottom: 6px;
+}
+.modal .tagline { font-size: 13px; color: var(--text3); margin-bottom: 28px; }
+.modal h3 {
+  font-family: 'Teko', sans-serif; font-size: 17px;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--teal); margin: 22px 0 10px;
+}
+.modal p, .modal li {
+  font-size: 13px; color: var(--text2); line-height: 1.75; margin-bottom: 6px;
+}
+.modal ol, .modal ul { padding-left: 18px; }
+.modal code {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 4px; padding: 2px 7px;
+  font-family: monospace; font-size: 12px; color: var(--gold);
+}
+.col-list {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 18px;
+  font-family: monospace; font-size: 12px; color: var(--text2);
+  line-height: 2; margin: 10px 0;
+}
+
+/* ─ SCROLLBAR ─ */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+/* ─ RESPONSIVE ─ */
+@media (max-width: 860px) {
+  .podium { grid-template-columns: 1fr; max-width: 340px; }
+  .lb-thead, .lb-row { grid-template-columns: 46px 1fr 90px 36px; }
+  .lb-thead .hm, .lb-row .hm { display: none; }
+  .pt-head, .pt-row { grid-template-columns: 36px 1fr 90px 70px; }
+  .pt-head .hm, .pt-row .hm { display: none; }
+  .squad-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 500px) {
+  .wrap { padding: 0 14px; }
+  .squad-grid { grid-template-columns: 1fr; }
+  .lb-pts { font-size: 22px; }
+  .brand-text h1 { font-size: 30px; }
+}
+</style>
+</head>
+<body>
+<div class="bg-fx"></div>
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-row">
+      <div class="brand">
+        <div class="brand-icon">🏏</div>
+        <div class="brand-text">
+          <h1>SCPL Fantasy League</h1>
+          <p>IPL 2026 &nbsp;·&nbsp; 10 Franchises &nbsp;·&nbsp; Season Standings</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="header-date" id="hdate">—</div>
+        <div class="header-season">Live Season Tracker</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <input class="sheet-input" id="sheetUrl" placeholder="Paste Google Sheet CSV URL to go live (File → Share → Publish to web → CSV)">
+    <button class="btn btn-primary" onclick="loadFromSheet()">Load Sheet</button>
+    <button class="btn btn-ghost" onclick="refreshAll()">↻ Refresh</button>
+    <button class="btn btn-ghost" onclick="openGuide()">📋 Setup Guide</button>
+    <div class="status-pill pill-demo" id="statusPill">
+      <span class="blink"></span>
+      <span id="statusTxt">Demo Data</span>
+    </div>
+    <span id="updatedAt" style="font-size:11px;color:var(--text3);margin-left:auto"></span>
+  </div>
+
+  <!-- PODIUM -->
+  <div class="podium-section">
+    <div class="section-label">Top 3 Franchises</div>
+    <div class="podium" id="podium">
+      <div class="no-data"><span>🏆</span>Loading…</div>
+    </div>
+  </div>
+
+  <!-- FULL STANDINGS -->
+  <div class="section-label">Full Standings</div>
+  <div class="lb-wrap" id="lbWrap">
+    <div class="no-data"><span>📊</span>Loading…</div>
+  </div>
+
+  <!-- ALL PLAYERS -->
+  <div class="players-section">
+    <div class="section-label">All Players</div>
+    <div class="table-controls">
+      <input class="search-box" id="psearch" placeholder="Search player, team or franchise…" oninput="renderPlayers()">
+      <button class="chip on"  onclick="setRole('all',this)">All</button>
+      <button class="chip" onclick="setRole('Batter',this)">Batters</button>
+      <button class="chip" onclick="setRole('Bowler',this)">Bowlers</button>
+      <button class="chip" onclick="setRole('All Rounder',this)">All Rounders</button>
+      <button class="chip" onclick="setRole('Wicket Keeper',this)">WK</button>
+      <button class="sort-btn on" id="sortBtn" onclick="toggleSort()">Sort: Pts ↓</button>
+    </div>
+    <div class="ptable" id="ptable">
+      <div class="no-data"><span>👤</span>Loading…</div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- SETUP GUIDE MODAL -->
+<div class="overlay" id="guideOverlay" onclick="closeGuideOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeGuide()">×</button>
+    <h2>Setup Guide</h2>
+    <p class="tagline">Connect your Google Sheet to keep scores live for all 10 friends</p>
+
+    <h3>Step 1 — Your Google Sheet columns</h3>
+    <p>The sheet must have exactly these 9 columns (same as your auction sheet + Points & Adjustment):</p>
+    <div class="col-list">Franchise | Player | Team | Role | Multiplier | Paid Amount | Points | Adjustment | Effective Points</div>
+    <p>The dashboard reads the <code>Effective Points</code> column (col 9) for all scoring — this already includes the 2× multiplier and any adjustments.</p>
+
+    <h3>Step 2 — Updating after each match</h3>
+    <ol>
+      <li>Go to <a href="https://www.iplt20.com/stats/2026" target="_blank" style="color:var(--teal)">iplt20.com/stats/2026</a> after a match ends</li>
+      <li>Find each player's fantasy points and update the <code>Points</code> column in your sheet</li>
+      <li>The <code>Effective Points</code> column should auto-calculate: <code>= Points * Multiplier + Adjustment</code></li>
+      <li>Save the sheet — the dashboard auto-picks it up on next refresh</li>
+    </ol>
+
+    <h3>Step 3 — Publish as CSV</h3>
+    <ol>
+      <li>In Google Sheets: <strong>File → Share → Publish to web</strong></li>
+      <li>Change the dropdown from "Web page" to <strong>Comma-separated values (.csv)</strong></li>
+      <li>Click <strong>Publish</strong> → copy the URL</li>
+      <li>Paste it in the toolbar above → click <strong>Load Sheet</strong></li>
+    </ol>
+
+    <h3>Step 4 — Share the dashboard</h3>
+    <p>Host this HTML file on <strong>GitHub Pages</strong> or <strong>Netlify</strong> (both free). Share the link — friends click it, hit ↻ Refresh after each match to see updated standings.</p>
+
+    <h3>Scoring Rules (built in)</h3>
+    <ul>
+      <li><strong>Top 10 players</strong> by Effective Points count per franchise; rest are benched</li>
+      <li><strong>Power player</strong> (Multiplier = 2) — their Effective Points already reflect the 2× in your sheet</li>
+      <li>Franchises with fewer than 10 players — all players count</li>
+    </ul>
+
+    <div style="margin-top:26px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="closeGuide()">Got it!</button>
+      <a class="btn btn-ghost" href="https://www.iplt20.com/stats/2026" target="_blank">IPL Stats →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── EMBEDDED REAL DATA ────────────────────────────────────────────────────
+const REAL_DATA = [
+  // Butler and Cheese
+  {franchise:'Butler and Cheese',player:'Jos Buttler',team:'Gujarat Titans',role:'Wicket Keeper',multiplier:1,points:17,adjustment:0,ep:17},
+  {franchise:'Butler and Cheese',player:'Rajat Patidar',team:'Royal Challengers Bangalore',role:'Batter',multiplier:1,points:15.5,adjustment:0,ep:15.5},
+  {franchise:'Butler and Cheese',player:'Shivam Dube',team:'Chennai Super Kings',role:'All Rounder',multiplier:2,points:3.5,adjustment:0,ep:7},
+  {franchise:'Butler and Cheese',player:'Prasidh Krishna',team:'Gujarat Titans',role:'Bowler',multiplier:1,points:37.5,adjustment:0,ep:37.5},
+  {franchise:'Butler and Cheese',player:'Vaibhav Arora',team:'Kolkata Knight Riders',role:'Bowler',multiplier:1,points:15,adjustment:0,ep:15},
+  {franchise:'Butler and Cheese',player:'Josh Inglis',team:'Lucknow Super Giants',role:'Wicket Keeper',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Butler and Cheese',player:'Jitesh Sharma',team:'Royal Challengers Bangalore',role:'Wicket Keeper',multiplier:1,points:2.5,adjustment:0,ep:2.5},
+  {franchise:'Butler and Cheese',player:'Shashank Singh',team:'Punjab Kings',role:'Batter',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Butler and Cheese',player:'Abishek Porel',team:'Delhi Capitals',role:'Wicket Keeper',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Butler and Cheese',player:'Dhruv Jurel',team:'Rajasthan Royals',role:'Wicket Keeper',multiplier:1,points:18.5,adjustment:0,ep:18.5},
+  {franchise:'Butler and Cheese',player:'Sherfane Rutherford',team:'Mumbai Indians',role:'Batter',multiplier:1,points:2.5,adjustment:0,ep:2.5},
+  {franchise:'Butler and Cheese',player:'Ayush Badoni',team:'Lucknow Super Giants',role:'All Rounder',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Butler and Cheese',player:'Naman Dhir',team:'Mumbai Indians',role:'All Rounder',multiplier:1,points:2.5,adjustment:0,ep:2.5},
+  {franchise:'Butler and Cheese',player:'Vipraj Nigam',team:'Delhi Capitals',role:'All Rounder',multiplier:1,points:2,adjustment:0,ep:2},
+  // Pitchers
+  {franchise:'Pitchers',player:'Travis Head',team:'Sunrisers Hyderabad',role:'Batter',multiplier:1,points:5,adjustment:0,ep:5},
+  {franchise:'Pitchers',player:'Ishan Kishan',team:'Sunrisers Hyderabad',role:'Wicket Keeper',multiplier:2,points:40.5,adjustment:-40.5,ep:40.5},
+  {franchise:'Pitchers',player:'Heinrich Klaasen',team:'Sunrisers Hyderabad',role:'Wicket Keeper',multiplier:1,points:13.5,adjustment:0,ep:13.5},
+  {franchise:'Pitchers',player:'Surya Kumar Yadav',team:'Mumbai Indians',role:'Batter',multiplier:1,points:7.5,adjustment:0,ep:7.5},
+  {franchise:'Pitchers',player:'Ajinkya Rahane',team:'Kolkata Knight Riders',role:'Batter',multiplier:1,points:28,adjustment:0,ep:28},
+  {franchise:'Pitchers',player:'Jofra Archer',team:'Rajasthan Royals',role:'Bowler',multiplier:1,points:31,adjustment:0,ep:31},
+  {franchise:'Pitchers',player:'Will Jacks',team:'Mumbai Indians',role:'All Rounder',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Pitchers',player:'Romario Shepherd',team:'Royal Challengers Bangalore',role:'All Rounder',multiplier:1,points:29,adjustment:0,ep:29},
+  {franchise:'Pitchers',player:'Deepak Chahar',team:'Mumbai Indians',role:'Bowler',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Pitchers',player:'Jacob Duffy',team:'Royal Challengers Bangalore',role:'Bowler',multiplier:1,points:37,adjustment:0,ep:37},
+  {franchise:'Pitchers',player:'Shahrukh Khan',team:'Gujarat Titans',role:'All Rounder',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Pitchers',player:'Rahul Tewatia',team:'Gujarat Titans',role:'All Rounder',multiplier:1,points:2.5,adjustment:0,ep:2.5},
+  {franchise:'Pitchers',player:'Mukesh Choudhary',team:'Chennai Super Kings',role:'Bowler',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Pitchers',player:'Robin Minz',team:'Mumbai Indians',role:'Wicket Keeper',multiplier:1,points:0,adjustment:0,ep:0},
+  // Achievers
+  {franchise:'Achievers',player:'Sai Sudharsan',team:'Gujarat Titans',role:'All Rounder',multiplier:2,points:5,adjustment:0,ep:10},
+  {franchise:'Achievers',player:'Rashid Khan',team:'Gujarat Titans',role:'Bowler',multiplier:1,points:19.5,adjustment:0,ep:19.5},
+  {franchise:'Achievers',player:'Cameron Green',team:'Kolkata Knight Riders',role:'Batter',multiplier:1,points:6,adjustment:0,ep:6},
+  {franchise:'Achievers',player:'Ravindra Jadeja',team:'Rajasthan Royals',role:'All Rounder',multiplier:1,points:25,adjustment:0,ep:25},
+  {franchise:'Achievers',player:'Nitish Kumar Reddy',team:'Sunrisers Hyderabad',role:'All Rounder',multiplier:1,points:5,adjustment:0,ep:5},
+  {franchise:'Achievers',player:'Ryan Rickelton',team:'Mumbai Indians',role:'Wicket Keeper',multiplier:1,points:41,adjustment:0,ep:41},
+  {franchise:'Achievers',player:'Venkatesh Iyer',team:'Royal Challengers Bangalore',role:'All Rounder',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Achievers',player:'Nitish Rana',team:'Delhi Capitals',role:'All Rounder',multiplier:1,points:8.5,adjustment:0,ep:8.5},
+  {franchise:'Achievers',player:'Tim David',team:'Royal Challengers Bangalore',role:'All Rounder',multiplier:1,points:6,adjustment:0,ep:6},
+  {franchise:'Achievers',player:'Kagiso Rabada',team:'Gujarat Titans',role:'Bowler',multiplier:1,points:14,adjustment:0,ep:14},
+  {franchise:'Achievers',player:'Suyash Sharma',team:'Royal Challengers Bangalore',role:'Bowler',multiplier:1,points:13,adjustment:0,ep:13},
+  {franchise:'Achievers',player:'Ramandeep Singh',team:'Kolkata Knight Riders',role:'All Rounder',multiplier:1,points:0,adjustment:0,ep:0},
+  // DPRS
+  {franchise:'DPRS',player:'Yashasvi Jaiswal',team:'Rajasthan Royals',role:'Batter',multiplier:2,points:13.5,adjustment:0,ep:27},
+  {franchise:'DPRS',player:'Ruturaj Gaikwad',team:'Chennai Super Kings',role:'Batter',multiplier:1,points:2.5,adjustment:0,ep:2.5},
+  {franchise:'DPRS',player:'Dewald Brevis',team:'Chennai Super Kings',role:'Batter',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'DPRS',player:'Sunil Narine',team:'Kolkata Knight Riders',role:'Bowler',multiplier:1,points:13,adjustment:0,ep:13},
+  {franchise:'DPRS',player:'Glenn Phillips',team:'Gujarat Titans',role:'Batter',multiplier:1,points:6,adjustment:0,ep:6},
+  {franchise:'DPRS',player:'Mitchell Santner',team:'Mumbai Indians',role:'All Rounder',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'DPRS',player:'Liam Livingstone',team:'Sunrisers Hyderabad',role:'All Rounder',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'DPRS',player:'Rovman Powell',team:'Kolkata Knight Riders',role:'Batter',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'DPRS',player:'Harshal Patel',team:'Sunrisers Hyderabad',role:'All Rounder',multiplier:1,points:3,adjustment:0,ep:3},
+  {franchise:'DPRS',player:'Azmatullah Omarzai',team:'Punjab Kings',role:'All Rounder',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'DPRS',player:'Yash Dayal',team:'Royal Challengers Bangalore',role:'Bowler',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'DPRS',player:'Avesh Khan',team:'Lucknow Super Giants',role:'Bowler',multiplier:1,points:0,adjustment:0,ep:0},
+  // Rising Stars
+  {franchise:'Rising Stars',player:'Hardik Pandya',team:'Mumbai Indians',role:'All Rounder',multiplier:2,points:24,adjustment:0,ep:48},
+  {franchise:'Rising Stars',player:'Priyansh Arya',team:'Punjab Kings',role:'All Rounder',multiplier:1,points:3.5,adjustment:0,ep:3.5},
+  {franchise:'Rising Stars',player:'Trent Boult',team:'Mumbai Indians',role:'Bowler',multiplier:1,points:7,adjustment:0,ep:7},
+  {franchise:'Rising Stars',player:'Marcus Stoinis',team:'Punjab Kings',role:'All Rounder',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Rising Stars',player:'Mohammed Shami',team:'Lucknow Super Giants',role:'Bowler',multiplier:1,points:19,adjustment:0,ep:19},
+  {franchise:'Rising Stars',player:'Ben Duckett',team:'Delhi Capitals',role:'Batter',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Rising Stars',player:'Prabhsimran Singh',team:'Punjab Kings',role:'Wicket Keeper',multiplier:1,points:16.5,adjustment:0,ep:16.5},
+  {franchise:'Rising Stars',player:'Shimron Hetmyer',team:'Rajasthan Royals',role:'Batter',multiplier:1,points:3.5,adjustment:0,ep:3.5},
+  {franchise:'Rising Stars',player:'Washington Sundar',team:'Gujarat Titans',role:'All Rounder',multiplier:1,points:20.5,adjustment:0,ep:20.5},
+  {franchise:'Rising Stars',player:'Bhuvneshwar Kumar',team:'Royal Challengers Bangalore',role:'Bowler',multiplier:1,points:16,adjustment:0,ep:16},
+  {franchise:'Rising Stars',player:'Sandeep Sharma',team:'Rajasthan Royals',role:'Bowler',multiplier:1,points:10,adjustment:0,ep:10},
+  {franchise:'Rising Stars',player:'Ashutosh Sharma',team:'Delhi Capitals',role:'All Rounder',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Rising Stars',player:'Jason Holder',team:'Gujarat Titans',role:'All Rounder',multiplier:1,points:0,adjustment:0,ep:0},
+  // KBM
+  {franchise:'KBM',player:'Nicholas Pooran',team:'Lucknow Super Giants',role:'Wicket Keeper',multiplier:1,points:2.5,adjustment:0,ep:2.5},
+  {franchise:'KBM',player:'K L Rahul',team:'Delhi Capitals',role:'Wicket Keeper',multiplier:2,points:2.5,adjustment:0,ep:5},
+  {franchise:'KBM',player:'Axar Patel',team:'Delhi Capitals',role:'All Rounder',multiplier:1,points:16,adjustment:0,ep:16},
+  {franchise:'KBM',player:'Mitchell Marsh',team:'Lucknow Super Giants',role:'All Rounder',multiplier:1,points:15.5,adjustment:0,ep:15.5},
+  {franchise:'KBM',player:'Nehal Wadhera',team:'Punjab Kings',role:'Batter',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'KBM',player:'N Tilak Varma',team:'Mumbai Indians',role:'Batter',multiplier:1,points:15,adjustment:0,ep:15},
+  {franchise:'KBM',player:'Angkrish Raghuvanshi',team:'Kolkata Knight Riders',role:'Batter',multiplier:1,points:25,adjustment:0,ep:25},
+  {franchise:'KBM',player:'Sai Kishore',team:'Gujarat Titans',role:'All Rounder',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'KBM',player:'Tushar Deshpande',team:'Rajasthan Royals',role:'Bowler',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'KBM',player:'Rahul Tripathi',team:'Kolkata Knight Riders',role:'Batter',multiplier:1,points:0,adjustment:0,ep:0},
+  // Joker X1
+  {franchise:'Joker X1',player:'Shubman Gill',team:'Gujarat Titans',role:'Batter',multiplier:1,points:20,adjustment:0,ep:20},
+  {franchise:'Joker X1',player:'Abhishek Sharma',team:'Sunrisers Hyderabad',role:'All Rounder',multiplier:1,points:3.5,adjustment:0,ep:3.5},
+  {franchise:'Joker X1',player:'Rishabh Pant',team:'Lucknow Super Giants',role:'Wicket Keeper',multiplier:2,points:5,adjustment:0,ep:10},
+  {franchise:'Joker X1',player:'Ayush Mhatre',team:'Chennai Super Kings',role:'Batter',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Joker X1',player:'Rinku Singh',team:'Kolkata Knight Riders',role:'Batter',multiplier:1,points:12.5,adjustment:0,ep:12.5},
+  {franchise:'Joker X1',player:'Devdutt Padikkal',team:'Royal Challengers Bangalore',role:'Batter',multiplier:1,points:42,adjustment:0,ep:42},
+  {franchise:'Joker X1',player:'Prithvi Shaw',team:'Delhi Capitals',role:'Batter',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Joker X1',player:'Krunal Pandya',team:'Royal Challengers Bangalore',role:'All Rounder',multiplier:1,points:1,adjustment:0,ep:1},
+  {franchise:'Joker X1',player:'Sarfaraz Khan',team:'Chennai Super Kings',role:'Batter',multiplier:1,points:11,adjustment:0,ep:11},
+  {franchise:'Joker X1',player:'Blessing Muzarabani',team:'Kolkata Knight Riders',role:'Bowler',multiplier:1,points:6,adjustment:0,ep:6},
+  {franchise:'Joker X1',player:'Shardul Thakur',team:'Mumbai Indians',role:'All Rounder',multiplier:1,points:31,adjustment:0,ep:31},
+  {franchise:'Joker X1',player:'Jacob Bethell',team:'Royal Challengers Bangalore',role:'All Rounder',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Joker X1',player:'Rahul Chahar',team:'Chennai Super Kings',role:'Bowler',multiplier:1,points:0,adjustment:0,ep:0},
+  // Batman Returns
+  {franchise:'Batman Returns',player:'Shreyas Iyer',team:'Punjab Kings',role:'Batter',multiplier:2,points:9.5,adjustment:0,ep:19},
+  {franchise:'Batman Returns',player:'Arshdeep Singh',team:'Punjab Kings',role:'Bowler',multiplier:1,points:14,adjustment:0,ep:14},
+  {franchise:'Batman Returns',player:'Rohit Sharma',team:'Mumbai Indians',role:'Batter',multiplier:1,points:39,adjustment:0,ep:39},
+  {franchise:'Batman Returns',player:'Aiden Markram',team:'Lucknow Super Giants',role:'Batter',multiplier:1,points:8,adjustment:0,ep:8},
+  {franchise:'Batman Returns',player:'Varun Chakaravarthy',team:'Kolkata Knight Riders',role:'Bowler',multiplier:1,points:5,adjustment:0,ep:5},
+  {franchise:'Batman Returns',player:'Mitchell Starc',team:'Delhi Capitals',role:'Bowler',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Batman Returns',player:'Mohammed Siraj',team:'Gujarat Titans',role:'Bowler',multiplier:1,points:6,adjustment:0,ep:6},
+  {franchise:'Batman Returns',player:'David Miller',team:'Delhi Capitals',role:'Batter',multiplier:1,points:2.5,adjustment:0,ep:2.5},
+  {franchise:'Batman Returns',player:'Matt Henry',team:'Chennai Super Kings',role:'Bowler',multiplier:1,points:4.5,adjustment:0,ep:4.5},
+  {franchise:'Batman Returns',player:'MS Dhoni',team:'Chennai Super Kings',role:'Wicket Keeper',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Batman Returns',player:'Anuj Rawat',team:'Gujarat Titans',role:'Wicket Keeper',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Batman Returns',player:'Prashant Veer',team:'Chennai Super Kings',role:'All Rounder',multiplier:1,points:0,adjustment:0,ep:0},
+  // Kadak Squad
+  {franchise:'Kadak Squad',player:'Sanju Samson',team:'Chennai Super Kings',role:'Wicket Keeper',multiplier:2,points:2.5,adjustment:0,ep:5},
+  {franchise:'Kadak Squad',player:'Vaibhav Sooryavanshi',team:'Rajasthan Royals',role:'Batter',multiplier:1,points:30.5,adjustment:0,ep:30.5},
+  {franchise:'Kadak Squad',player:'Phil Salt',team:'Royal Challengers Bangalore',role:'Wicket Keeper',multiplier:1,points:12.5,adjustment:0,ep:12.5},
+  {franchise:'Kadak Squad',player:'Finn Allen',team:'Kolkata Knight Riders',role:'Wicket Keeper',multiplier:1,points:22,adjustment:0,ep:22},
+  {franchise:'Kadak Squad',player:'Kuldeep Yadav',team:'Delhi Capitals',role:'Bowler',multiplier:1,points:27,adjustment:0,ep:27},
+  {franchise:'Kadak Squad',player:'Quinton de Kock',team:'Mumbai Indians',role:'Wicket Keeper',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Kadak Squad',player:'Ravi Bishnoi',team:'Rajasthan Royals',role:'Bowler',multiplier:1,points:20,adjustment:0,ep:20},
+  {franchise:'Kadak Squad',player:'Tim Seifert',team:'Kolkata Knight Riders',role:'Wicket Keeper',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Kadak Squad',player:'Pat Cummins',team:'Sunrisers Hyderabad',role:'Bowler',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'Kadak Squad',player:'Mohsin Khan',team:'Lucknow Super Giants',role:'Bowler',multiplier:1,points:24.5,adjustment:0,ep:24.5},
+  {franchise:'Kadak Squad',player:'Jaydev Unadkat',team:'Sunrisers Hyderabad',role:'Bowler',multiplier:1,points:15.5,adjustment:0,ep:15.5},
+  {franchise:'Kadak Squad',player:'Abdul Samad',team:'Lucknow Super Giants',role:'All Rounder',multiplier:1,points:13.5,adjustment:0,ep:13.5},
+  {franchise:'Kadak Squad',player:'Kumar Kushagra',team:'Gujarat Titans',role:'Wicket Keeper',multiplier:1,points:0,adjustment:0,ep:0},
+  // UP Gladiators
+  {franchise:'UP Gladiators',player:'Virat Kohli',team:'Royal Challengers Bangalore',role:'Batter',multiplier:2,points:35.5,adjustment:0,ep:71},
+  {franchise:'UP Gladiators',player:'Jasprit Bumrah',team:'Mumbai Indians',role:'Bowler',multiplier:1,points:4,adjustment:0,ep:4},
+  {franchise:'UP Gladiators',player:'Tristan Stubbs',team:'Delhi Capitals',role:'Wicket Keeper',multiplier:1,points:16,adjustment:0,ep:16},
+  {franchise:'UP Gladiators',player:'Riyan Parag',team:'Rajasthan Royals',role:'Batter',multiplier:1,points:6,adjustment:0,ep:6},
+  {franchise:'UP Gladiators',player:'Yuzvendra Chahal',team:'Punjab Kings',role:'Bowler',multiplier:1,points:23,adjustment:0,ep:23},
+  {franchise:'UP Gladiators',player:'Marco Jansen',team:'Punjab Kings',role:'All Rounder',multiplier:1,points:21,adjustment:0,ep:21},
+  {franchise:'UP Gladiators',player:'Khaleel Ahmed',team:'Chennai Super Kings',role:'Bowler',multiplier:1,points:10,adjustment:0,ep:10},
+  {franchise:'UP Gladiators',player:'Noor Ahmad',team:'Chennai Super Kings',role:'Bowler',multiplier:1,points:4,adjustment:0,ep:4},
+  {franchise:'UP Gladiators',player:'T Natarajan',team:'Delhi Capitals',role:'Bowler',multiplier:1,points:32,adjustment:0,ep:32},
+  {franchise:'UP Gladiators',player:'Karun Nair',team:'Delhi Capitals',role:'Batter',multiplier:1,points:0,adjustment:0,ep:0},
+  {franchise:'UP Gladiators',player:'Jamie Overton',team:'Chennai Super Kings',role:'All Rounder',multiplier:1,points:13,adjustment:0,ep:13},
+  {franchise:'UP Gladiators',player:'Akash Deep',team:'Kolkata Knight Riders',role:'Bowler',multiplier:1,points:0,adjustment:0,ep:0},
+];
+
+const AVATARS = {
+  'Butler and Cheese':'🧀','Pitchers':'⚾','Achievers':'🏅','DPRS':'⚡',
+  'Rising Stars':'🌟','KBM':'👑','Joker X1':'🃏','Batman Returns':'🦇',
+  'Kadak Squad':'🔥','UP Gladiators':'⚔️'
+};
+const AVATAR_BG = {
+  'Butler and Cheese':'rgba(240,180,41,0.15)','Pitchers':'rgba(77,166,255,0.15)',
+  'Achievers':'rgba(0,212,170,0.15)','DPRS':'rgba(255,71,87,0.15)',
+  'Rising Stars':'rgba(255,215,0,0.15)','KBM':'rgba(167,139,250,0.15)',
+  'Joker X1':'rgba(50,205,50,0.15)','Batman Returns':'rgba(100,149,237,0.15)',
+  'Kadak Squad':'rgba(255,107,53,0.15)','UP Gladiators':'rgba(255,99,132,0.15)'
+};
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let DATA = [];
+let expanded = null;
+let roleFilter = 'all';
+let sortAsc = false;
+let isLive = false;
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('hdate').textContent = new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+  const saved = localStorage.getItem('scpl_sheet_url');
+  if (saved) { document.getElementById('sheetUrl').value = saved; loadFromSheet(); }
+  else loadReal();
+});
+
+function loadReal() {
+  DATA = REAL_DATA;
+  isLive = false;
+  setStatus('demo','Demo — using embedded data');
+  stamp(); render();
+}
+
+async function loadFromSheet() {
+  const url = document.getElementById('sheetUrl').value.trim();
+  if (!url) { alert('Paste a Google Sheet CSV URL first.'); return; }
+  setStatus('demo','Loading…');
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const csv = await r.text();
+    const parsed = parseCSV(csv);
+    if (!parsed.length) throw new Error('No rows parsed');
+    DATA = parsed;
+    isLive = true;
+    localStorage.setItem('scpl_sheet_url', url);
+    setStatus('live','Live — Google Sheet connected');
+    stamp(); render();
+  } catch(e) {
+    alert('Could not load sheet.\n\nMake sure it is published as CSV.\n\nError: ' + e.message);
+    setStatus('err','Load failed');
+    loadReal();
+  }
+}
+
+function refreshAll() {
+  const url = document.getElementById('sheetUrl').value.trim();
+  if (url && isLive) loadFromSheet(); else loadReal();
+}
+
+// ─── CSV PARSER ───────────────────────────────────────────────────────────────
+// Columns: Franchise(0) Player(1) Team(2) Role(3) Multiplier(4) PaidAmount(5) Points(6) Adjustment(7) EffectivePoints(8)
+function parseCSV(csv) {
+  const lines = csv.trim().split('\n');
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const c = lines[i].split(',').map(s => s.trim().replace(/^"|"$/g,''));
+    if (!c[0] || !c[1]) continue;
+    const ep = parseFloat(c[8]) || 0;
+    rows.push({
+      franchise: c[0], player: c[1], team: c[2], role: c[3],
+      multiplier: parseFloat(c[4])||1,
+      points: parseFloat(c[6])||0,
+      adjustment: parseFloat(c[7])||0,
+      ep
+    });
+  }
+  return rows;
+}
+
+// ─── COMPUTE TEAMS ────────────────────────────────────────────────────────────
+function computeTeams() {
+  const fnames = [...new Set(DATA.map(p=>p.franchise))];
+  return fnames.map(fn => {
+    const players = DATA.filter(p=>p.franchise===fn);
+    const sorted = [...players].sort((a,b)=>b.ep-a.ep);
+    const top = sorted.slice(0,10);
+    const bench = new Set(sorted.slice(10).map(p=>p.player));
+    const total = top.reduce((s,p)=>s+p.ep,0);
+    return {fn, players, bench, total, playersSorted: sorted};
+  }).sort((a,b)=>b.total-a.total);
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function render() {
+  const teams = computeTeams();
+  renderPodium(teams);
+  renderLB(teams);
+  renderPlayers();
+}
+
+// ─ PODIUM ─
+function renderPodium(teams) {
+  const el = document.getElementById('podium');
+  const top3 = teams.slice(0,3);
+  const medals = ['🥇','🥈','🥉'];
+  const pClass = ['p1','p2','p3'];
+  el.innerHTML = top3.map((t,i) => `
+    <div class="podium-card ${pClass[i]}" onclick="jumpAndExpand('${esc(t.fn)}')">
+      <div class="podium-rank">${['1ST','2ND','3RD'][i]}</div>
+      <div class="podium-avatar" style="background:${AVATAR_BG[t.fn]||'rgba(255,255,255,0.05)'}">${AVATARS[t.fn]||'🏏'}</div>
+      <div class="podium-name">${t.fn}</div>
+      <div class="podium-pts">${t.total.toFixed(1)}</div>
+      <div class="podium-sub">total points · ${Math.min(10,t.players.length)} players counted</div>
+    </div>`).join('');
+}
+
+function jumpAndExpand(fn) {
+  expanded = fn;
+  const teams = computeTeams();
+  renderLB(teams);
+  document.getElementById('lbWrap').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ─ LEADERBOARD ─
+function renderLB(teams) {
+  const wrap = document.getElementById('lbWrap');
+  const thead = `
+    <div class="lb-thead">
+      <div>Rank</div><div>Franchise</div>
+      <div class="hm">Players</div>
+      <div class="hm" style="text-align:right">Raw Pts</div>
+      <div style="text-align:right">Eff. Pts</div>
+      <div></div>
+    </div>`;
+
+  const rows = teams.map((t,i) => {
+    const rank = i+1;
+    const rc = rank<=3?`r${rank}`:'';
+    const isExp = expanded === t.fn;
+    const rawTotal = t.playersSorted.slice(0,10).reduce((s,p)=>s+p.points,0);
+    const rowHTML = `
+      <div class="lb-row ${rc} ${isExp?'expanded':''}" onclick="toggleExpand('${esc(t.fn)}')">
+        <div class="lb-rank">${rank}</div>
+        <div class="lb-team">
+          <div class="t-avatar" style="background:${AVATAR_BG[t.fn]||'rgba(255,255,255,0.05)'}">${AVATARS[t.fn]||'🏏'}</div>
+          <div>
+            <div class="t-name">${t.fn}</div>
+            <div class="t-meta">${t.players.length} players</div>
+          </div>
+        </div>
+        <div class="lb-players hm">${Math.min(10,t.players.length)} counting</div>
+        <div class="lb-raw hm">${rawTotal.toFixed(1)}</div>
+        <div>
+          <div class="lb-pts">${t.total.toFixed(1)}</div>
+          <div class="lb-pts-sub">eff. points</div>
+        </div>
+        <div class="lb-chevron">›</div>
+      </div>`;
+
+    const detailHTML = `
+      <div class="team-detail ${isExp?'open':''}" id="det-${safeid(t.fn)}">
+        ${renderDetail(t)}
+      </div>`;
+    return rowHTML + detailHTML;
+  }).join('');
+
+  wrap.innerHTML = thead + rows;
+}
+
+function renderDetail(t) {
+  const sorted = [...t.playersSorted];
+  const cards = sorted.map(p => {
+    const isBench = t.bench.has(p.player);
+    const isPower = p.multiplier === 2;
+    let ptCls = p.ep > 0 ? 'scored' : '';
+    if (isPower && p.ep > 0) ptCls = 'powered';
+    return `
+      <div class="sq-card ${isPower?'is-power':''} ${isBench?'is-bench':''}">
+        <div class="sq-left">
+          <div class="sq-name">${p.player}</div>
+          <div class="sq-role">${p.role}</div>
+          <div class="sq-iplteam">${p.team}</div>
+        </div>
+        <div class="sq-right">
+          <div class="sq-pts ${ptCls}">${p.ep > 0 ? p.ep.toFixed(1) : '—'}</div>
+          ${isPower && p.points>0 ? `<div class="sq-raw">${p.points} × 2</div>` : ''}
+          ${p.adjustment!==0 ? `<div class="sq-raw">adj: ${p.adjustment}</div>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+  return `
+    <div class="detail-top">
+      <div class="detail-heading">${t.fn} — Squad</div>
+      <div class="detail-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--power)"></div>Power Player</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--border)"></div>Benched (outside top 10)</div>
+      </div>
+    </div>
+    <div class="squad-grid">${cards}</div>`;
+}
+
+function toggleExpand(fn) {
+  expanded = expanded === fn ? null : fn;
+  const teams = computeTeams();
+  renderLB(teams);
+}
+
+// ─ PLAYERS TABLE ─
+function renderPlayers() {
+  const q = document.getElementById('psearch').value.toLowerCase();
+  let rows = DATA.filter(p => {
+    const mr = roleFilter==='all' || p.role===roleFilter;
+    const ms = !q || p.player.toLowerCase().includes(q) || p.team.toLowerCase().includes(q) || p.franchise.toLowerCase().includes(q);
+    return mr && ms;
+  });
+  rows.sort((a,b) => sortAsc ? a.ep-b.ep : b.ep-a.ep);
+
+  const el = document.getElementById('ptable');
+  if (!rows.length) { el.innerHTML=`<div class="no-data"><span>🔍</span>No players match</div>`; return; }
+
+  const head = `
+    <div class="pt-head">
+      <div>#</div><div>Player</div>
+      <div class="hm">Franchise</div>
+      <div class="hm">IPL Team</div>
+      <div>Eff. Pts</div><div>Role</div>
+    </div>`;
+
+  const body = rows.map((p,i) => {
+    const isPow = p.multiplier===2;
+    let ptCls = p.ep>0?'':'zero';
+    if(isPow && p.ep>0) ptCls='pw';
+    const roleShort = p.role.replace('All Rounder','AR').replace('Wicket Keeper','WK');
+    return `
+      <div class="pt-row ${isPow?'pw':''}">
+        <div class="pt-n">${i+1}</div>
+        <div><div class="pt-player-name">${p.player}${isPow?' ⚡':''}</div></div>
+        <div class="pt-franchise hm">${p.franchise}</div>
+        <div class="pt-ipl hm">${p.team}</div>
+        <div>
+          <div class="pt-pts ${ptCls}">${p.ep>0?p.ep.toFixed(1):'—'}</div>
+          ${isPow&&p.points>0?`<div style="font-size:9px;color:var(--text3)">${p.points}×2${p.adjustment?'+adj':''}</div>`:''}
+        </div>
+        <div class="pt-role-badge">${roleShort}</div>
+      </div>`;
+  }).join('');
+  el.innerHTML = head + body;
+}
+
+function setRole(r, el) {
+  roleFilter = r;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  renderPlayers();
+}
+
+function toggleSort() {
+  sortAsc = !sortAsc;
+  document.getElementById('sortBtn').textContent = sortAsc ? 'Sort: Pts ↑' : 'Sort: Pts ↓';
+  renderPlayers();
+}
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function setStatus(type, txt) {
+  const p = document.getElementById('statusPill');
+  p.className = 'status-pill ' + {live:'pill-live',demo:'pill-demo',err:'pill-err'}[type];
+  document.getElementById('statusTxt').textContent = txt;
+}
+function stamp() {
+  document.getElementById('updatedAt').textContent =
+    'Updated ' + new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+}
+function esc(s){ return s.replace(/'/g,"\\'"); }
+function safeid(s){ return s.replace(/[^a-z0-9]/gi,'_'); }
+
+// ─── MODAL ───────────────────────────────────────────────────────────────────
+function openGuide(){ document.getElementById('guideOverlay').classList.add('open'); }
+function closeGuide(){ document.getElementById('guideOverlay').classList.remove('open'); }
+function closeGuideOutside(e){ if(e.target===e.currentTarget) closeGuide(); }
+</script>
+</body>
+</html>
