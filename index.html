@@ -797,7 +797,7 @@ function loadReal() {
 }
 
 async function loadFromSheet() {
-  const url = document.getElementById('sheetUrl').value.trim();
+  const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRBJPw54YEOo5H2P68uJN7yNEps_NypF03aTkWiti21i41_XW-L6WMcdelK_xh17byAtz3wp-dCfntf/pub?gid=0&single=true&output=csv';
   if (!url) { alert('Paste a Google Sheet CSV URL first.'); return; }
   setStatus('demo','Loading…');
   try {
@@ -1043,6 +1043,7 @@ function safeid(s){ return s.replace(/[^a-z0-9]/gi,'_'); }
 function openGuide(){ document.getElementById('guideOverlay').classList.add('open'); }
 function closeGuide(){ document.getElementById('guideOverlay').classList.remove('open'); }
 function closeGuideOutside(e){ if(e.target===e.currentTarget) closeGuide(); }
+  window.onload = loadFromSheet;
 </script>
 </body>
 </html>
