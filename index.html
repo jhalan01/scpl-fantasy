@@ -1051,20 +1051,25 @@ function safeid(s){ return s.replace(/[^a-z0-9]/gi,'_'); }
 function openGuide(){ document.getElementById('guideOverlay').classList.add('open'); }
 function closeGuide(){ document.getElementById('guideOverlay').classList.remove('open'); }
 function closeGuideOutside(e){ if(e.target===e.currentTarget) closeGuide(); }
-  /* --- SCPL ASSISTANT LOGIC --- */
+
+  window.onload = loadFromSheet;
+  // ... existing code above ...
+
+window.onload = loadFromSheet;
+
+// --- NEW BOT CODE STARTS HERE ---
 function handleChat() {
     const input = document.getElementById('chatInput').value.toLowerCase().trim();
     const responseArea = document.getElementById('chatResponse');
     
-    // Safety check: Use DATA if live, or REAL_DATA as fallback
-    const currentData = (typeof DATA !== 'undefined' && DATA.length > 0) ? DATA : REAL_DATA;
+    // Check if live DATA exists, otherwise use REAL_DATA fallback
+    const currentData = (typeof DATA !== 'undefined' && DATA.length > 0) ? DATA : (typeof REAL_DATA !== 'undefined' ? REAL_DATA : []);
     
     if (!currentData || currentData.length === 0) {
-        responseArea.innerHTML = "⚠️ <span style='color:var(--gold)'>Data loading... please try again in a second.</span>";
+        responseArea.innerHTML = "⚠️ <span style='color:var(--gold)'>Data is not ready. Please click 'Load Sheet' or 'Refresh'.</span>";
         return;
     }
 
-    // Helper to handle both CSV Array and Demo Object formats
     const getVal = (row, index, key) => Array.isArray(row) ? row[index] : row[key];
 
     // 1. Player Search
@@ -1078,7 +1083,7 @@ function handleChat() {
         return;
     }
 
-    // 2. Franchise Top Performer Search
+    // 2. Franchise Search
     let franchiseMatch = currentData.filter(row => {
         let fName = getVal(row, 0, 'franchise');
         return fName && input.includes(fName.toLowerCase());
@@ -1093,7 +1098,11 @@ function handleChat() {
 
     responseArea.innerHTML = "🔍 Try: 'Points for Virat Kohli' or 'Highest in Joker 11'";
 }
-  window.onload = loadFromSheet;
+// --- NEW BOT CODE ENDS HERE ---
+
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>
