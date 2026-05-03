@@ -1070,36 +1070,61 @@ function handleChat() {
         return;
     }
 
-    const getVal = (row, index, key) => Array.isArray(row) ? row[index] : row[key];
+    // --- LOGIC ENGINE ---
+    
+    // 1. Identify Role (Batter, Bowler, etc.)
+    let role = null;
+    if (input.includes('bat') || input.includes('batter')) role = 'Batter';
+    if (input.includes('bowl') || input.includes('bowler')) role = 'Bowler';
+    if (input.includes('all rounder') || input.includes('ar')) role = 'All Rounder';
+    if (input.includes('keeper') || input.includes('wk')) role = 'Wicket Keeper';
 
-    // 1. Player Search
-    let playerMatch = currentData.find(row => {
-        let pName = getVal(row, 1, 'player');
-        return pName && input.includes(pName.toLowerCase());
+    // 2. Identify Franchise (Supports "Joker 11" or "Joker X1")
+    let franchise = null;
+    const franchises = [...new Set(currentData.map(p => p.franchise))];
+    franchises.forEach(f => {
+        if (input.includes(f.toLowerCase()) || (f === 'Joker X1' && input.includes('joker 11'))) {
+            franchise = f;
+        }
     });
 
+    // 3. Filter data based on what we found
+    let filtered = currentData;
+    if (franchise) filtered = filtered.filter(p => p.franchise === franchise);
+    if (role) filtered = filtered.filter(p => p.role === role);
+
+    // --- GENERATE ANSWERS ---
+
+    // A. Highest Score Question
+    if (input.includes('highest') || input.includes('best') || input.includes('top')) {
+        filtered.sort((a, b) => b.ep - a.ep);
+        if (filtered.length > 0) {
+            const top = filtered[0];
+            const context = (role ? role + " " : "") + (franchise ? "in " + franchise : "overall");
+            responseArea.innerHTML = `🏆 The highest scoring ${context} is <b>${top.player}</b> with <b>${top.ep}</b> points!`;
+            return;
+        }
+    }
+
+    // B. Count/Aggregate Question
+    if (input.includes('how many') || input.includes('count') || input.includes('aggregate')) {
+        const count = filtered.length;
+        const context = (role ? role + "s " : "players ") + (franchise ? "in " + franchise : "total");
+        responseArea.innerHTML = `📊 There are <b>${count}</b> ${context}.`;
+        return;
+    }
+
+    // C. Individual Player Search (The fallback)
+    let playerMatch = currentData.find(p => input.includes(p.player.toLowerCase()));
     if (playerMatch) {
-        responseArea.innerHTML = `👤 <b>${getVal(playerMatch, 1, 'player')}</b> has <b>${getVal(playerMatch, 8, 'ep')}</b> pts for ${getVal(playerMatch, 0, 'franchise')}.`;
+        responseArea.innerHTML = `👤 <b>${playerMatch.player}</b> has <b>${playerMatch.ep}</b> pts for <b>${playerMatch.franchise}</b>.`;
         return;
     }
 
-    // 2. Franchise Search
-    let franchiseMatch = currentData.filter(row => {
-        let fName = getVal(row, 0, 'franchise');
-        return fName && input.includes(fName.toLowerCase());
-    });
-
-    if (franchiseMatch.length > 0) {
-        franchiseMatch.sort((a, b) => parseFloat(getVal(b, 8, 'ep') || 0) - parseFloat(getVal(a, 8, 'ep') || 0));
-        const top = franchiseMatch[0];
-        responseArea.innerHTML = `🔥 Top for <b>${getVal(top, 0, 'franchise')}</b> is <b>${getVal(top, 1, 'player')}</b> with <b>${getVal(top, 8, 'ep')}</b> pts!`;
-        return;
-    }
-
-    responseArea.innerHTML = "🔍 Try: 'Points for Virat Kohli' or 'Highest in Joker 11'";
+    // D. If nothing matches
+    responseArea.innerHTML = "🔍 Try: 'Highest scoring bowler in Joker X1' or 'How many batters in UP Gladiators?'";
 }
 // --- NEW BOT CODE ENDS HERE ---
-
 </script>
 </body>
 </html>
